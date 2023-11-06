@@ -10,7 +10,7 @@ Citizen.CreateThread(function()
             local nearbyPlayers = GetPlayersInArea(playerCoords, config.radius) -- Adjust the radius as needed
     
             for _, player in ipairs(nearbyPlayers) do
-                local targetPed = GetPlayerPed(-1)
+                local targetPed = GetPlayerPed(player)
 
                 if playerPed == targetPed and config.excludeSelf then 
                     return
@@ -54,7 +54,7 @@ function GetPlayersInArea(coords, radius)
     local players = {}
 
     for _, player in ipairs(GetActivePlayers()) do
-        local targetPed = GetPlayerPed(-1)
+        local targetPed = GetPlayerPed(player)
         local targetCoords = GetEntityCoords(targetPed)
 
         local distance = GetDistanceBetweenCoords(targetCoords, coords, true)
