@@ -13,13 +13,13 @@ Citizen.CreateThread(function()
                 local targetPed = GetPlayerPed(player)
 
                 if playerPed == targetPed and config.excludeSelf then 
-                    return
+                    
+                else
+                    local targetCoords = GetEntityCoords(targetPed)
+                    local playerID = GetPlayerServerId(player)
+                    
+                    DrawText3D(targetCoords.x, targetCoords.y, targetCoords.z + 1.0, "ID: " .. playerID)
                 end
-
-                local targetCoords = GetEntityCoords(targetPed)
-                local playerID = GetPlayerServerId(player)
-                
-                DrawText3D(targetCoords.x, targetCoords.y, targetCoords.z + 1.0, "ID: " .. playerID)
             end
         end
     end
