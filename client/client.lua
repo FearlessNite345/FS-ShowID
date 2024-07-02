@@ -7,7 +7,7 @@ Citizen.CreateThread(function()
         if showIds == true then 
             local playerPed = PlayerPedId()
             local playerCoords = GetEntityCoords(playerPed)
-            local nearbyPlayers = GetPlayersInArea(playerCoords, config.radius) -- Adjust the radius as needed
+            local nearbyPlayers = GetPlayersInArea(playerCoords, config.radius)
     
             for _, player in ipairs(nearbyPlayers) do
                 local targetPed = GetPlayerPed(player)
