@@ -1,23 +1,23 @@
 local showIds = false
 
 Citizen.CreateThread(function()
-    while true do 
+    while true do
         Citizen.Wait(0)
 
-        if showIds == true then 
+        if showIds == true then
             local playerPed = PlayerPedId()
-            local playerCoords = GetEntityCoords(playerPed)
+            local playerCoords = GetEntityCoords(playerPed, false)
             local nearbyPlayers = GetPlayersInArea(playerCoords, config.radius)
-    
+
             for _, player in ipairs(nearbyPlayers) do
                 local targetPed = GetPlayerPed(player)
 
-                if playerPed == targetPed and config.excludeSelf then 
-                    
+                if playerPed == targetPed and config.excludeSelf then
+
                 else
-                    local targetCoords = GetEntityCoords(targetPed)
+                    local targetCoords = GetEntityCoords(targetPed, false)
                     local playerID = GetPlayerServerId(player)
-                    
+
                     DrawText3D(targetCoords.x, targetCoords.y, targetCoords.z + 1.0, "ID: " .. playerID)
                 end
             end
@@ -34,19 +34,19 @@ end, false)
 TriggerEvent('chat:addSuggestion', '/showids', 'Will show player IDs for ' .. config.duration .. ' seconds')
 
 function DrawText3D(x, y, z, text)
-    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
+    local onScreen, _x, _y = GetScreenCoordFromWorldCoord(x, y, z)
     local px, py, pz = table.unpack(GetGameplayCamCoord())
 
     if onScreen then
         SetTextScale(config.scale, config.scale)
         SetTextFont(4)
-        SetTextProportional(1)
+        SetTextProportional(true)
         SetTextColour(118, 212, 118, 215)
-        SetTextEntry("STRING")
-        SetTextCentre(1)
+        BeginTextCommandDisplayText("STRING")
+        SetTextCentre(true)
         SetTextDropshadow(2, 0, 0, 0, 0)
-        AddTextComponentString(text)
-        DrawText(_x, _y)
+        AddTextComponentSubstringPlayerName(text)
+        EndTextCommandDisplayText(_x, _y)
     end
 end
 
@@ -55,9 +55,9 @@ function GetPlayersInArea(coords, radius)
 
     for _, player in ipairs(GetActivePlayers()) do
         local targetPed = GetPlayerPed(player)
-        local targetCoords = GetEntityCoords(targetPed)
+        local targetCoords = GetEntityCoords(targetPed, false)
 
-        local distance = GetDistanceBetweenCoords(targetCoords, coords, true)
+        local distance = #(targetCoords - coords)
 
         if distance <= radius then
             table.insert(players, player)
