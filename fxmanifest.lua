@@ -14,3 +14,7 @@ server_scripts {
 shared_scripts {
     'config/*.lua'
 }
+
+dependencies {
+    'FS-Lib'
+}
