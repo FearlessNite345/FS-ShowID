@@ -1,7 +1,7 @@
 fx_version 'cerulean'
 games { 'gta5' }
 author 'FearlessStudios'
-version '1.0.0'
+version '1.0.3'
 
 client_scripts {
     'client/*.lua'

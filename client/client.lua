@@ -7,12 +7,12 @@ Citizen.CreateThread(function()
         if showIds == true then
             local playerPed = PlayerPedId()
             local playerCoords = GetEntityCoords(playerPed, false)
-            local nearbyPlayers = GetPlayersInArea(playerCoords, config.radius)
+            local nearbyPlayers = GetPlayersInArea(playerCoords, Config.radius)
 
             for _, player in ipairs(nearbyPlayers) do
                 local targetPed = GetPlayerPed(player)
 
-                if playerPed == targetPed and config.excludeSelf then
+                if playerPed == targetPed and Config.excludeSelf then
 
                 else
                     local targetCoords = GetEntityCoords(targetPed, false)
@@ -27,18 +27,18 @@ end)
 
 RegisterCommand("showids", function(source, args, rawCommand)
     showIds = true
-    Citizen.Wait(config.duration * 1000)
+    Citizen.Wait(Config.duration * 1000)
     showIds = false
 end, false)
 
-TriggerEvent('chat:addSuggestion', '/showids', 'Will show player IDs for ' .. config.duration .. ' seconds')
+TriggerEvent('chat:addSuggestion', '/showids', 'Will show player IDs for ' .. Config.duration .. ' seconds')
 
 function DrawText3D(x, y, z, text)
     local onScreen, _x, _y = GetScreenCoordFromWorldCoord(x, y, z)
     local px, py, pz = table.unpack(GetGameplayCamCoord())
 
     if onScreen then
-        SetTextScale(config.scale, config.scale)
+        SetTextScale(Config.scale, Config.scale)
         SetTextFont(4)
         SetTextProportional(true)
         SetTextColour(118, 212, 118, 215)
